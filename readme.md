@@ -5,7 +5,7 @@ Jawab: Pertama-tama saya mengikuti dari tutorial 0, saya ikuti semuanya, di bagi
 
 Buatlah bagan yang berisi request client ke web aplikasi berbasis Django beserta responnya dan jelaskan pada bagan tersebut kaitan antara urls.py, views.py, models.py, dan berkas html.
 Jawab:
-![Jawaban Nomor 2](BaganNomor2.JPG)
+![Jawaban Nomor 2](BaganNomor2.jpg)
 
 Jelaskan peran settings.py dalam proyek Django!
 Jawab: Setting.py adalah file yang dibaca oleh sistem untuk mengkonfigurasikan pengaturan-pengaturan yang telah kita set di dalam aplikasi. Seperti salah satu yang diatur dalam setting.py adalah allowed hosts, kalau kita tidak mencantumkan apa saja url yang kita bolehkan menjadi hosts, maka ia tidak akan pernah jalan karena tidak dapat izin, disitulah letak kegunaan setting.py yaitu dengan membaca setting.py agar mereka tau apa saja yang boleh menjadi hosts, dan disitu masih banyak settingan lain yang penting untuk meluncurkan aplikasi sesuai yang kita mau.
