@@ -2,8 +2,11 @@ from django.db import models
 
 CATEGORY_CHOICES = [
     ('jersey', 'Jersey'),
-    ('merch', 'Merchandise'),
-    ('ticket', 'Ticket'),
+    ('shoe', 'Shoe'),
+    ('sock', 'Sock'),
+    ('ball', 'Ball'),
+    ('jacket', 'Jackets'),
+    ('accesories', 'Accesories'),
 ]
 
 class Products(models.Model):
