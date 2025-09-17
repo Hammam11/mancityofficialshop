@@ -3,10 +3,14 @@
 <p><a href="{% url 'main:show_main' %}"><button>← Back to Products List</button></a></p>
 
 <h1>{{ products.name }}</h1>
-<p><b>{{ products.get_category_display }}</b>{% if products.is_featured %} | 
-    <b>Featured</b>{% endif %}{% if products.is_popular %} | 
-    <b>Popular</b>{% endif %} | <i>{{ products.created_at|date:"d M Y H:i" }}</i> 
-    | Solds: {{ products.products_solds }}</p>
+<p>
+  <b>{{ products.get_category_display }}</b>
+  {% if products.is_featured %} | <b>Featured</b>{% endif %}
+  {% if products.is_popular %} | <b>Popular</b>{% endif %}
+  | <i>{{ products.created_at|date:"d M Y H:i" }}</i> 
+  | Solds: {{ products.products_solds }} 
+  | Stock: {{ products.stock }}
+</p>
 
 {% if products.thumbnail %}
 <img src="{{ products.thumbnail }}" alt="Products thumbnail" width="300">
@@ -14,5 +18,16 @@
 {% endif %}
 
 <p>{{ products.description }}</p>
+
+{% if products.stock > 0 %}
+<form method="post" action="{% url 'main:purchase_product' products.id %}">
+    {% csrf_token %}
+    <label for="quantity">Quantity:</label>
+    <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ products.stock }}">
+    <button type="submit">Buy Now</button>
+</form>
+{% else %}
+<p style="color: red; font-weight: bold;">Out of Stock</p>
+{% endif %}
 
 {% endblock content %}

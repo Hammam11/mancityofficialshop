@@ -27,13 +27,24 @@ def create_products(request):
 
 def show_products(request, id):
     products = get_object_or_404(Products, pk=id)
-    products.increment_solds()
 
     context = {
         'products': products
     }
 
     return render(request, "products_detail.html", context)
+
+def purchase_product(request, product_id):
+    product = get_object_or_404(Products, id=product_id)
+    
+    if request.method == 'POST':
+        quantity = int(request.POST.get('quantity', 1))
+        
+        # gunakan method purchase di models.py
+        if product.purchase(quantity):
+            return redirect('main:show_main')
+        else:
+            return render(request, 'out_of_stock.html')
 
 def show_xml(request):
     products_list = Products.objects.all()
