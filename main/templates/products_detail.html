@@ -26,8 +26,33 @@
     <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ products.stock }}">
     <button type="submit">Buy Now</button>
 </form>
+{% endif %}
+
+{% if products.user %}
+    <p>Author: {{ products.user.username }}</p>
 {% else %}
-<p style="color: red; font-weight: bold;">Out of Stock</p>
+    <p>Author: Anonymous</p>
+{% endif %}
+
+{% if user.is_authenticated %}
+    {% if products.user %}
+        {% if user == products.user %}
+            <form method="post" action="{% url 'main:delete_product' products.id %}" style="margin-top:10px;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Yakin mau hapus produk ini?')" style="background:red; color:white;">
+                    Delete Product
+                </button>
+            </form>
+        {% endif %}
+    {% else %}
+        <form method="post" action="{% url 'main:delete_product' products.id %}" style="margin-top:10px;">
+    {% csrf_token %}
+    <button type="submit" onclick="return confirm('Yakin mau hapus produk ini?')" style="background:red; color:white;">
+        Delete Product
+    </button>
+</form>
+
+    {% endif %}
 {% endif %}
 
 {% endblock content %}

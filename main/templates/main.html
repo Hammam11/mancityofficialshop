@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <h1>ManCityOfficialShop</h1>
 
 <h5>Name:</h5>
@@ -6,9 +8,22 @@
 <h5>Class:</h5>
 <p>{{ class }}</p>
 
+
 <a href="{% url 'main:create_products' %}">
-  <button>+ Add products</button>
+  <button>+ Add Products</button>
 </a>
+<a href="{% url 'main:logout' %}">
+  <button>Logout</button>
+</a>
+<h5>Sesi terakhir login: {{ last_login }}</h5>
+<hr>
+
+<a href="?filter=all">
+    <button type="button">All Articles</button>
+</a>
+<a href="?filter=my">
+    <button type="button">My Articles</button>
+</a> 
 
 <hr>
 
@@ -40,3 +55,5 @@
 {% endfor %}
 
 {% endif %}
+
+{% endblock content %}

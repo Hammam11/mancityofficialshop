@@ -1,15 +1,18 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-CATEGORY_CHOICES = [
+class Products(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    CATEGORY_CHOICES = [
     ('jersey', 'Jersey'),
     ('shoe', 'Shoe'),
     ('sock', 'Sock'),
     ('ball', 'Ball'),
-    ('jacket', 'Jackets'),
+    ('jacket', 'Jacket'),
     ('accesories', 'Accesories'),
-]
+    ]
 
-class Products(models.Model):
+
     name = models.CharField(max_length=255)
     price = models.IntegerField(default=0)
     description = models.TextField(default="")
