@@ -1,3 +1,26 @@
+## Tugas 5:
+1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
+Jawab: 
+A. !important : Sudah sesuai namanya bila ada ini maka akan langsung di prioritaskan
+B. Inline style (style="")
+C. ID selector (#id)
+D. Class, attribute, pseudo-class selector (.class, :hover)
+E. Elemenet dan pseudo-element selector (div, p, ::after)
+F. Universal selector dan inheritance (*, pewarisan dari parent)
+G. Bila masih sama maka yang ditulis terakhir yang dipakai
+
+2. Mengapa responsive design menjadi konsep yang penting dalam pengembangan aplikasi web? Berikan contoh aplikasi yang sudah dan belum menerapkan responsive design, serta jelaskan mengapa!
+Jawab: Responsive design sangat penting agar mudah digunakan di semua perangkat, memberikan pengalaman pengguna yang baik, lalu developer tidak perlu membuat versi terpisah antara web dan mobile dengan responsive design sehingga lebih efisiensi untuk pengembangan.
+
+3. Jelaskan perbedaan antara margin, border, dan padding, serta cara untuk mengimplementasikan ketiga hal tersebut!
+Jawab: Margin: Ruang kosong di luar elemen yang gunanya untuk memberi jarak antar elemen. Border: Garis tepi yang mengelilingi konten dan Padding sebuah elemen, gunanya untuk memberi batas pada elemen, biasanya garis. Padding: Ruang ksoong di dalam elemen, di antara konten sama border, gunanya untuk memberi jarak antara konten sama bordernya. Cara implementasinya tinggal <yang ingin dipanggil>: <ukurannya>; contoh "margin: 30px;"
+
+4. Jelaskan konsep flex box dan grid layout beserta kegunaannya!
+Jawab: Flexbox adalah sistem layout 1 dimensi yang mengatur elemen baris atau kolom, ia dapat mengatur alignment, distribution, dan juga spacing 1 arah. Salah atu kegunaannya adalah membuat navigasi horizontal, card/box yang responsif. Sedangkan Grid Layout itu sistem layout 2 dimensi yang bisa membuat kita mengatur baris dan kolom sekaligus. Biasanya grid lebih cocok digunakan untuk struktur layout halaman yang kompleks. Intinya flexbox hanya searah sedangkan grid layout 2 arah, dan mereka excel di kasusnya masing-masing.
+
+5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
+Jawab: 
+
 ## Tugas 4:
 1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
 Jawab: AuthenticationForm itu adalah form bawaan dari Django untuk login user. ia menyediakan 2 field yaitu username dan password. Ketika form divalidasi dengan is_valid(), maka Django akan otomatis mengecek apakah usernamenya terdaftar, lalu memverifikasi password apakah sesuai lalu menyimpan objek user yang valid tersebut di dalam form.get_user(). Kelebihan dari ini adalah ia bawaan Django sehingga mudah langsung digunakan aja lalu dapat dikustomisasi. Kekurangannya ia hanya mendukung autentikasi dengan username dan password saja, tidak bisa lewat email/OTP/dll.

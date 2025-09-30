@@ -1,58 +1,82 @@
 {% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>{{ products.name }} - ManCityOfficialShop</title>
+{% endblock meta %}
+
 {% block content %}
-<p><a href="{% url 'main:show_main' %}"><button>← Back to Products List</button></a></p>
+<div class="bg-gray-50 w-full min-h-screen py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
-<h1>{{ products.name }}</h1>
-<p>
-  <b>{{ products.get_category_display }}</b>
-  {% if products.is_featured %} | <b>Featured</b>{% endif %}
-  {% if products.is_popular %} | <b>Popular</b>{% endif %}
-  | <i>{{ products.created_at|date:"d M Y H:i" }}</i> 
-  | Solds: {{ products.products_solds }} 
-  | Stock: {{ products.stock }}
-</p>
+        <!-- Back -->
+        <div class="mb-4">
+            <a href="{% url 'main:show_main' %}" 
+               class="text-blue-600 hover:underline text-sm font-medium">
+                ← Back to Products
+            </a>
+        </div>
 
-{% if products.thumbnail %}
-<img src="{{ products.thumbnail }}" alt="Products thumbnail" width="300">
-<br /><br />
-{% endif %}
+        <!-- Product Card -->
+        <div class="bg-white border border-gray-200 rounded-lg shadow-sm overflow-hidden">
 
-<p>{{ products.description }}</p>
+            <!-- Image -->
+            {% if products.thumbnail %}
+                <img src="{{ products.thumbnail }}" alt="{{ products.name }}"
+                     class="w-full h-64 sm:h-80 object-cover">
+            {% endif %}
 
-{% if products.stock > 0 %}
-<form method="post" action="{% url 'main:purchase_product' products.id %}">
-    {% csrf_token %}
-    <label for="quantity">Quantity:</label>
-    <input type="number" id="quantity" name="quantity" value="1" min="1" max="{{ products.stock }}">
-    <button type="submit">Buy Now</button>
-</form>
-{% endif %}
+            <!-- Content -->
+            <div class="p-6">
+                <h1 class="text-2xl font-bold text-gray-900 mb-2">{{ products.name }}</h1>
 
-{% if products.user %}
-    <p>Author: {{ products.user.username }}</p>
-{% else %}
-    <p>Author: Anonymous</p>
-{% endif %}
+                <div class="flex flex-wrap items-center gap-2 mb-4 text-sm">
+                    <span class="px-2 py-1 rounded bg-gray-100 text-gray-700">
+                        {{ products.get_category_display }}
+                    </span>
+                    {% if products.is_featured %}
+                        <span class="px-2 py-1 rounded bg-yellow-100 text-yellow-800">Featured</span>
+                    {% endif %}
+                    {% if products.is_popular %}
+                        <span class="px-2 py-1 rounded bg-red-100 text-red-800">Hot</span>
+                    {% endif %}
+                </div>
 
-{% if user.is_authenticated %}
-    {% if products.user %}
-        {% if user == products.user %}
-            <form method="post" action="{% url 'main:delete_product' products.id %}" style="margin-top:10px;">
-                {% csrf_token %}
-                <button type="submit" onclick="return confirm('Yakin mau hapus produk ini?')" style="background:red; color:white;">
-                    Delete Product
-                </button>
-            </form>
-        {% endif %}
-    {% else %}
-        <form method="post" action="{% url 'main:delete_product' products.id %}" style="margin-top:10px;">
-    {% csrf_token %}
-    <button type="submit" onclick="return confirm('Yakin mau hapus produk ini?')" style="background:red; color:white;">
-        Delete Product
-    </button>
-</form>
+                <p class="text-lg font-semibold text-blue-600 mb-4">
+                    Rp {{ products.price|floatformat:0 }}
+                </p>
 
-    {% endif %}
-{% endif %}
+                <p class="text-gray-700 leading-relaxed mb-6 whitespace-pre-line">
+                    {{ products.description }}
+                </p>
 
+                <ul class="text-sm text-gray-600 space-y-1 mb-6">
+                    <li><strong>Stock:</strong> {{ products.stock }}</li>
+                    <li><strong>Sold:</strong> {{ products.products_solds }}</li>
+                </ul>
+
+                <!-- Buy -->
+                <form method="POST" action="{% url 'main:purchase_product' products.id %}" class="flex items-center gap-3">
+                    {% csrf_token %}
+                    <input type="number" name="quantity" value="1" min="1" max="{{ products.stock }}"
+                           class="w-20 border-gray-300 rounded px-2 py-1 text-sm focus:ring-blue-500 focus:border-blue-500">
+                    <button type="submit"
+                            class="px-4 py-2 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition">
+                        Buy
+                    </button>
+                </form>
+
+                <!-- Author -->
+                <div class="mt-6 text-sm text-gray-500">
+                    Author: 
+                    {% if products.user %}
+                        {{ products.user.username }}
+                    {% else %}
+                        Anonymous
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}

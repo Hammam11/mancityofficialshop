@@ -131,16 +131,20 @@ def logout_user(request):
     return response
 
 
-@login_required(login_url='/login')
-def delete_product(request, id):
-    product = get_object_or_404(Products, pk=id)
+def delete_products(request, id):
+    products = get_object_or_404(products, pk=id)
+    products.delete()
+    return HttpResponseRedirect(reverse('main:show_main'))
 
-    if product.user:
-        if request.user == product.user:
-            product.delete()
-        else:
-            return HttpResponseForbidden("You are not allowed to delete this product.")
-    else:
-        product.delete()
+def edit_products(request, id):
+    products = get_object_or_404(Products, pk=id)
+    form = ProductsForm(request.POST or None, instance=products)
+    if form.is_valid() and request.method == 'POST':
+        form.save()
+        return redirect('main:show_main')
 
-    return redirect("main:show_main")
+    context = {
+        'form': form
+    }
+
+    return render(request, "edit_products.html", context)
