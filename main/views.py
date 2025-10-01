@@ -132,7 +132,7 @@ def logout_user(request):
 
 
 def delete_products(request, id):
-    products = get_object_or_404(products, pk=id)
+    products = get_object_or_404(Products, pk=id)
     products.delete()
     return HttpResponseRedirect(reverse('main:show_main'))
 
