@@ -8,17 +8,18 @@
 {% block content %}
 {% include 'navbar.html' %}
 
-<div class="bg-[#F5F5F5] w-full pt-16 min-h-screen">
+<!-- Ganti background jadi gradient biru -->
+<div class="bg-gradient-to-b from-[#6CABDD] via-[#A7D3F3] to-white w-full pt-16 min-h-screen">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
 
     <!-- Header Section -->
     <div class="mb-8 text-center">
       <h1 class="text-4xl font-bold text-[#1C2B5A] mb-2">ManCityOfficialShop Products</h1>
-      <p class="text-gray-600">Stay updated with the latest Manchester City merchandise</p>
+      <p class="text-gray-700">Stay updated with the latest Manchester City merchandise</p>
     </div>
 
     <!-- Filter Section -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 bg-white rounded-lg border border-gray-200 p-4">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 bg-white rounded-lg shadow-md border border-gray-200 p-4">
       <div class="flex space-x-3 mb-4 sm:mb-0">
         <a href="?" class="{% if request.GET.filter == 'all' or not request.GET.filter  %} bg-[#6CABDD] text-white{% else %}bg-white text-gray-700 border border-gray-300{% endif %} px-4 py-2 rounded-md font-medium transition-colors hover:bg-[#1C2B5A] hover:text-white">
           All products
@@ -28,7 +29,7 @@
         </a>
       </div>
       {% if user.is_authenticated %}
-        <div class="text-sm text-gray-500">
+        <div class="text-sm text-gray-600">
           Last login: {{ last_login }}
         </div>
       {% endif %}
@@ -36,7 +37,7 @@
 
     <!-- Products Grid -->
     {% if not products_list %}
-      <div class="bg-white rounded-lg border border-gray-200 p-12 text-center">
+      <div class="bg-white rounded-lg border border-gray-200 p-12 text-center shadow-md">
         <div class="w-32 h-32 mx-auto mb-4">
           <img src="{% static 'image/no-products.png' %}" alt="No products available" class="w-full h-full object-contain">
         </div>
@@ -56,17 +57,17 @@
                 <img src="{{ products.thumbnail }}" alt="{{ products.name }}" class="w-full h-48 object-cover transition-transform duration-500 hover:scale-110">
               </div>
             {% else %}
-              <div class="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-400">
+              <div class="w-full h-48 bg-[#D0E8F6] flex items-center justify-center text-gray-400">
                 No Image
               </div>
             {% endif %}
 
             <div class="p-4 flex-1 flex flex-col">
               <h2 class="text-2xl font-semibold text-[#1C2B5A] mb-1">{{ products.name }}</h2>
-              <p class="text-sm text-gray-500 mb-1"><strong>Category:</strong> {{ products.get_category_display }}</p>
-              <p class="text-sm text-gray-500 mb-1"><strong>Price:</strong> Rp {{ products.price|floatformat:0 }}</p>
-              <p class="text-sm text-gray-500 mb-1"><strong>Stock:</strong> {{ products.stock }}</p>
-              <p class="text-sm text-gray-500 mb-3"><strong>Solds:</strong> {{ products.products_solds }}</p>
+              <p class="text-sm text-gray-600 mb-1"><strong>Category:</strong> {{ products.get_category_display }}</p>
+              <p class="text-sm text-gray-600 mb-1"><strong>Price:</strong> Rp {{ products.price|floatformat:0 }}</p>
+              <p class="text-sm text-gray-600 mb-1"><strong>Stock:</strong> {{ products.stock }}</p>
+              <p class="text-sm text-gray-600 mb-3"><strong>Solds:</strong> {{ products.products_solds }}</p>
 
               <div class="mt-auto flex space-x-2">
                 <a href="{% url 'main:show_products' products.id %}" 

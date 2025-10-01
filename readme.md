@@ -19,7 +19,7 @@ Jawab: Margin: Ruang kosong di luar elemen yang gunanya untuk memberi jarak anta
 Jawab: Flexbox adalah sistem layout 1 dimensi yang mengatur elemen baris atau kolom, ia dapat mengatur alignment, distribution, dan juga spacing 1 arah. Salah atu kegunaannya adalah membuat navigasi horizontal, card/box yang responsif. Sedangkan Grid Layout itu sistem layout 2 dimensi yang bisa membuat kita mengatur baris dan kolom sekaligus. Biasanya grid lebih cocok digunakan untuk struktur layout halaman yang kompleks. Intinya flexbox hanya searah sedangkan grid layout 2 arah, dan mereka excel di kasusnya masing-masing.
 
 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)!
-Jawab: 
+Jawab: Jadi awalnya saya kerjakan mengikuti tutorial seperti biasa, namun ada masalah, yaitu uuid dan int dia saya juga kurang ngerti kenapa tapi yang pasti ada yang memanggil int ada yang memanggil uuid sehingga error, dan akhirnya saya mencari cara saya hapus semua history dan akhirnya berhasil Setelah itu saya lanjut mengerjakan, memperbarui kode saya. Namun saat di up ke pws, problem sama kembali muncul, lama tidak bisa saya atasi, akhirnya saya membongkar ulang kode saya tanpa uuid dan sekarang sudah bisa di pakai.
 
 ## Tugas 4:
 1. Apa itu Django AuthenticationForm? Jelaskan juga kelebihan dan kekurangannya.
