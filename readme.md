@@ -1,3 +1,34 @@
+## Tugas 6:
+1. Apa perbedaan antara synchronous request dan asynchronous request?
+Jawab: Synchronous request itu ketika pengguna mengirim permintaan ke server, browser akan menunggu sampai server memberikan respon sebelum melanjutkan aktivitas lain di halaman. Selama proses ini, halamannya biasanya kurang responsif gitu. Sedangkan asynchronous request (kayak di AJAX) buat browser tetap berinteraksi dengan pengguna tanpa harus menunggu respon server. Data dikirim dan diterima di latar belakang, jadi halaman tidak perlu direload sepenuhnya.
+
+2. Bagaimana AJAX bekerja di Django (alur request–response)?
+Jawab:
+* Pengguna melakukan sesuatu di halaman (misalnya klik tombol atau isi form).
+* JavaScript (biasanya melalui `fetch()` atau `XMLHttpRequest`) mengirim asynchronous request ke endpoint Django (misalnya ke view dengan `@require_POST` atau `JsonResponse`).
+* View Django memproses data tersebut di server, lalu mengirimkan response dalam format JSON
+* JavaScript menerima respon JSON dan memperbarui bagian tertentu dari halaman (misalnya menambah produk, menghapus data, atau menampilkan notifikasi) tanpa reload halaman
+
+3. Apa keuntungan menggunakan AJAX dibandingkan render biasa di Django?
+Jawab:
+* Tidak perlu reload seluruh halaman, hanya bagian tertentu yang diperbarui.
+* Interaksi lebih cepat dan responsif karena data ditangani secara lokal di browser.
+* Menghemat bandwidth dan waktu karena hanya data penting yang dikirim.
+* Memungkinkan pembuatan fitur dinamis seperti live search, filter, cart update, atau infinite scroll.
+* Memberikan pengalaman pengguna (UX) yang lebih modern dan interaktif.
+
+4. Bagaimana cara memastikan keamanan saat menggunakan AJAX untuk fitur Login dan Register di Django?
+Jawab:
+* Gunakan CSRF token pada setiap request AJAX POST untuk mencegah serangan Cross-Site Request Forgery
+* Pastikan data dikirim melalui HTTPS, bukan HTTP biasa.
+* Validasi semua input di sisi server (Django view/form), bukan hanya di sisi client.
+* Gunakan mekanisme autentikasi Django bawaan (`authenticate()`, `login()`, dll.) untuk memastikan keamanan login.
+* Batasi dan tangani respon JSON agar tidak menampilkan informasi sensitif (seperti password atau session ID).
+
+5.Bagaimana AJAX mempengaruhi pengalaman pengguna (User Experience) pada website?
+Jawab: AJAX meningkatkan UX dengan membuat interaksi terasa lebih cepat, lancar, dan real-time. Pengguna tidak perlu menunggu reload halaman setiap kali melakukan aksi. Contohnya: menambah produk ke keranjang, memberi like, atau memfilter data bisa langsung terlihat hasilnya tanpa berpindah halaman. Jadi website terasa lebih interaktif, efisien, dan modern, mirip dengan aplikasi desktop atau mobile.
+
+
 ## Tugas 5:
 1. Jika terdapat beberapa CSS selector untuk suatu elemen HTML, jelaskan urutan prioritas pengambilan CSS selector tersebut!
 Jawab: 

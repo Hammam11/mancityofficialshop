@@ -1,0 +1,188 @@
+<!-- CRUD Modal -->
+<div id="crudModal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 transition-opacity">
+  <div id="crudModalContent"
+       class="bg-white rounded-2xl shadow-xl w-full max-w-lg mx-4 transform transition-all opacity-0 scale-95">
+    <!-- Header -->
+    <div class="flex justify-between items-center border-b border-gray-200 px-6 py-4 bg-gradient-to-r from-[#6CABDD] to-[#A7D3F3] rounded-t-2xl">
+      <h2 id="modalTitle" class="text-xl font-semibold text-white">Add New Product</h2>
+      <button onclick="hideModal()" class="text-white hover:text-gray-200">
+        ✖
+      </button>
+    </div>
+
+    <!-- Form -->
+    <form id="productsForm" class="p-6 space-y-4">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700">Product Name</label>
+        <input type="text" id="name" name="name" required
+               class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#6CABDD] focus:border-[#6CABDD]">
+      </div>
+
+      <div>
+        <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+        <input type="number" id="price" name="price" min="0" required
+               class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#6CABDD] focus:border-[#6CABDD]">
+      </div>
+
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+        <textarea id="description" name="description" rows="3" required
+                  class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#6CABDD] focus:border-[#6CABDD]"></textarea>
+      </div>
+
+      <div>
+        <label for="category" class="block text-sm font-medium text-gray-700">Category</label>
+        <select id="category" name="category" required
+                class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#6CABDD] focus:border-[#6CABDD]">
+          <option value="" disabled selected>-- Select Category --</option>
+          <option value="jersey">Jersey</option>
+          <option value="shoe">Shoe</option>
+          <option value="sock">Sock</option>
+          <option value="ball">Ball</option>
+          <option value="jacket">Jacket</option>
+          <option value="accessories">Accessories</option>
+        </select>
+      </div>
+
+
+      <div>
+        <label for="thumbnail" class="block text-sm font-medium text-gray-700">Thumbnail URL</label>
+        <input type="url" id="thumbnail" name="thumbnail"
+               class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#6CABDD] focus:border-[#6CABDD]">
+      </div>
+
+      <div>
+        <label for="stock" class="block text-sm font-medium text-gray-700">Stock</label>
+        <input type="number" id="stock" name="stock" min="0" required
+               class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-[#6CABDD] focus:border-[#6CABDD]">
+      </div>
+
+      <div class="flex items-center">
+        <input type="checkbox" id="is_featured" name="is_featured"
+               class="h-4 w-4 text-[#6CABDD] focus:ring-[#6CABDD] border-gray-300 rounded">
+        <label for="is_featured" class="ml-2 text-sm text-gray-700">Featured Product</label>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end space-x-3 pt-4 border-t border-gray-200">
+        <button type="button" onclick="hideModal()" class="px-4 py-2 rounded-lg text-gray-600 hover:bg-gray-100">
+          Cancel
+        </button>
+        <button type="submit"
+                class="px-5 py-2 rounded-lg text-white bg-[#6CABDD] hover:bg-[#4EA0D3] transition-colors">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden fixed bottom-5 right-5 bg-white shadow-lg border-l-4 border-[#6CABDD] rounded-lg p-4 max-w-sm">
+  <div id="toastTitle" class="font-semibold text-gray-800"></div>
+  <div id="toastMessage" class="text-gray-600 text-sm"></div>
+</div>
+
+<script>
+  let _MODE = 'create';
+  let _EDIT_ID = null;
+
+  const modal = document.getElementById('crudModal');
+  const modalContent = document.getElementById('crudModalContent');
+  const form = document.getElementById('productsForm');
+
+  function showModal(isUpdate = false, product = null) {
+    form.reset();
+    _MODE = isUpdate ? 'update' : 'create';
+    _EDIT_ID = product?.id || null;
+
+    document.getElementById('modalTitle').textContent = isUpdate ? 'Edit Product' : 'Add New Product';
+
+  if (isUpdate && product) {
+    document.getElementById('name').value = product.name;
+    document.getElementById('price').value = product.price;
+    document.getElementById('description').value = product.description;
+    document.getElementById('category').value = product.category; // ✅ ini sudah cocok untuk <select>
+    document.getElementById('thumbnail').value = product.thumbnail;
+    document.getElementById('stock').value = product.stock;
+    document.getElementById('is_featured').checked = product.is_featured;
+  }
+
+
+    modal.classList.remove('hidden');
+    setTimeout(() => {
+      modalContent.classList.remove('opacity-0', 'scale-95');
+      modalContent.classList.add('opacity-100', 'scale-100');
+    }, 50);
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) hideModal();
+    }, { once: true });
+
+    document.addEventListener('keydown', escCloseOnce);
+  }
+
+  function escCloseOnce(e) {
+    if (e.key === 'Escape') {
+      hideModal();
+      document.removeEventListener('keydown', escCloseOnce);
+    }
+  }
+
+  function hideModal() {
+    modalContent.classList.add('opacity-0', 'scale-95');
+    setTimeout(() => {
+      modal.classList.add('hidden');
+      modalContent.classList.remove('opacity-0', 'scale-95');
+    }, 150);
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    try {
+      if (_MODE === 'update' && _EDIT_ID) {
+        await updateProductsEntry(_EDIT_ID);
+        showToast('✅ Product updated!', 'Your changes have been saved.');
+      } else {
+        await addProductsEntry();
+        showToast('✅ Product added!', 'Your product is now live.');
+      }
+
+      form.reset();
+      hideModal();
+      document.dispatchEvent(new CustomEvent('productsAdded'));
+    } catch (error) {
+      showToast('❌ Failed to save product', 'Please try again.');
+    }
+  });
+
+  async function addProductsEntry() {
+    const response = await fetch("{% url 'main:add_products_entry_ajax' %}", {
+      method: "POST",
+      body: new FormData(form),
+    });
+    if (!response.ok) throw new Error("Add failed");
+  }
+
+  async function updateProductsEntry(id) {
+    const response = await fetch(`/products/${id}/update-ajax/`, {
+      method: "POST",
+      body: new FormData(form),
+    });
+    if (!response.ok) throw new Error("Update failed");
+  }
+
+  // === Toast ===
+  function showToast(title, message) {
+    const toast = document.getElementById('toast');
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMessage').textContent = message;
+
+    toast.classList.remove('hidden');
+    toast.classList.add('animate-slide-up');
+
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 3000);
+  }
+</script>
